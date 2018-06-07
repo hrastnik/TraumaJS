@@ -87,6 +87,7 @@ class Trauma {
   handleAnchorClick = anchorElement => {
     const nextURL = anchorElement.getAttribute("href");
     if (nextURL == null) return;
+    this.oldURL = window.location.pathname;
     event.preventDefault();
     this.transitionInitiator = Trauma.INITIATORS.anchorClick;
     this.getNewPage(nextURL);
@@ -95,11 +96,13 @@ class Trauma {
   listenForPopStateURLs = () => window.addEventListener("popstate", this.handlePopState);
 
   handlePopState = () => {
-    if (history.length === 1) return;
-
-    this.history.pop();
+    if (this.history.length === 1) {
+      console.log("history is empty");
+      return false;
+    }
+    this.oldURL = this.history.pop();
     const nextURL = this.history[this.history.length - 1];
-    if (nextURL == null) return;
+
     event.preventDefault();
     this.transitionInitiator = Trauma.INITIATORS.popState;
     this.getNewPage(nextURL);
@@ -112,10 +115,10 @@ class Trauma {
     request.send();
 
     for (const config of this.config) {
-      if (Trauma.doesRouteMatch(window.location.pathname, config.from) === false) continue;
+      if (Trauma.doesRouteMatch(this.oldURL, config.from) === false) continue;
       if (config.to != null && Trauma.doesRouteMatch(nextURL, config.to) === false) continue;
 
-      console.log(window.location.pathname, nextURL);
+      console.log("FROM:", this.oldURL, "\nTO:", nextURL);
 
       this.finish = config.finish;
       this.start = config.start;
@@ -141,8 +144,10 @@ class Trauma {
     const canRunTransition = this.requestDone && this.startTransitionDone;
     if (!canRunTransition) return;
 
-    if (this.transitionInitiator === Trauma.INITIATORS.anchorClick) this.history.push(this.nextURL);
-    window.history.pushState({}, null, this.nextURL);
+    if (this.transitionInitiator === Trauma.INITIATORS.anchorClick) {
+      this.history.push(this.nextURL);
+      window.history.pushState({}, null, this.nextURL);
+    }
 
     const activeHead = document.head;
     const nextHead = this.nextDocument.head;
@@ -163,7 +168,7 @@ class Trauma {
   };
 
   finalize = () => {
-    console.log("history", this.history);
+    console.log("history...\n  ", this.history.slice(-3).join("\n  "));
 
     if (this.shouldReplaceScene === false) {
       this.oldScene.parentElement.removeChild(this.oldScene);
