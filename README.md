@@ -4,10 +4,10 @@ TraumaJS is a lightweight library that enables you to easily create page transit
 
 # Features:
 
-* Simple, intuitive API
-* Covers most common cases
-* Lightweight
-* Supports all major browsers
+- Simple, intuitive API
+- Covers most common cases
+- Lightweight
+- Supports all major browsers
 
 # Usage
 
@@ -23,7 +23,7 @@ When you click a link on your webpage, Trauma prevents the default browser actio
 
 ## HTML
 
-All your pages must contain an element with the id of `active-scene`. Trauma will search for this element in all the pages it loads and replace the element from the old page with the element it finds in the new page.
+All your pages must contain an element with the id of `scene`. Trauma will search for this element in all the pages it loads and replace the element from the old page with the element it finds in the new page.
 
 ## Javascript
 
@@ -37,21 +37,21 @@ Once the page is loaded initialize Trauma with an array of transition objects, e
 
 The constructor accepts an array of TransitionConfig objects. Each TransitionConfig object must have the following properties.
 
-* from: (regex | string | function) - Defines on which pages the transition should fire. If it's a regex, Trauma will check if the current page URL matches that regex. If it's a string Trauma will check if the current page URL contains that string. If it's a function it accepts the current URL and should return true if the transition should fire or false if it should not.
-* to: (undefined | regex | string | function) - Optional argument. If it's left undefined then the `from` property alone decides if the transition should fire. If it's defined it works exactly like the `from` property, except it works with the next page URL which is read from the link href or internally from the instance if the back button is pressed.
-* start: (function) - Runs when the transition starts. The function is passed three arguments
+- `from: (regex | string | function)` - Defines on which pages the transition should fire. If it's a regex, Trauma will check if the current page URL matches that regex. If it's a string Trauma will check if the current page URL contains that string. If it's a function it accepts the current URL and should return true if the transition should fire or false if it should not.
+- `to: (undefined | regex | string | function)` - Optional argument. If it's left undefined then the `from` property alone decides if the transition should fire. If it's defined it works exactly like the `from` property, except it works with the next page URL which is read from the link href or internally from the instance if the back button is pressed.
+- `start: (function)` - Runs when the transition starts. The function is passed three arguments
 
-  * replace - Calling this function replaces the current scene with the new scene.
-  * insert - Calling this function inserts the new scene in the page DOM just before the old scene.
-  * oldScene - This is the scene element on the active page.
+  - `replace` - Calling this function replaces the current scene with the new scene.
+  - `insert` - Calling this function inserts the new scene in the page DOM just before the old scene.
+  - `oldScene` - This is the scene element on the active page.
 
   You must call either `replace` or `insert` in order to advance the transition. Depending on what you call, the transition behaves differently. If you're creating a hidden transition you should hide the active page with your transitioner and then call replace. If you're creating a visible transition you should give the user some feedback, like fading the content or something similar.
 
-* finish: (function) - Runs when the next page loads and the start function ends. It is passed three arguments.
+- `finish: (function)` - Runs when the next page loads and the start function ends. It is passed three arguments.
 
-  * done - Function that should be called when the transition is over. It destroys the old scene in the case when `insert` is called in the start function.
-  * newScene - The new scene
-  * oldScene - In the case when `insert` is called it holds a reference to the new scene, and in the case `replace` is called it is `null`
+  - `done` - Function that should be called when the transition is over. It destroys the old scene in the case when `insert` is called in the start function.
+  - `newScene` - The new scene
+  - `oldScene` - In the case when `insert` is called it holds a reference to the new scene, and in the case `replace` is called it is `null`
 
   The finish function should perform the finishing part of the transition.
 
