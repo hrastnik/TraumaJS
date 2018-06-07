@@ -1,0 +1,23 @@
+{
+  "name": "trauma",
+  "version": "1.0.0",
+  "description": "Easily create transitions between pages",
+  "scripts": {
+    "build": "npx babel --minified --no-comments --compact true --out-file dist/Trauma.js src/Trauma.js",
+    "dev": "npx babel --compact false --out-file dist/Trauma.js --watch src/Trauma.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "trauma",
+    "traumajs",
+    "transitions",
+    "page"
+  ],
+  "author": "Mateo Hrastnik",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0"
+  }
+}
