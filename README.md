@@ -61,7 +61,9 @@ For your convenience here are some examples to get you up and running.
 
 ## Simple hidden transition
 
-### [Demo](https://hrastnik.github.io/TraumaJS/examples/hidden-transition/)
+### [Demo 1](https://hrastnik.github.io/TraumaJS/examples/hidden-transition/)
+### [Demo 2](https://hrastnik.github.io/TraumaJS/examples/visible-transition/)
+### [Demo 3](https://hrastnik.github.io/TraumaJS/examples/multiple-transitions/)
 
     new Trauma([
       {
